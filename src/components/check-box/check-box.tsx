@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-restricted-imports
 import { FormControlLabel, Checkbox as MuiCheckbox } from "@mui/material";
 import { Controller, useFormContext } from "react-hook-form";
 import { FormControl } from "../form-control/form-control";
@@ -12,11 +13,13 @@ const Checkbox = ({ name, label, required }: Props) => {
       name={name}
       control={control}
       rules={{ required }}
-      render={({ field, fieldState: { error } }) => (
+      render={({ field: { value, ...field }, fieldState: { error } }) => (
         <FormControl error={error}>
           <FormControlLabel
             label={label}
-            control={<MuiCheckbox {...field} name={name} />}
+            control={
+              <MuiCheckbox {...field} value={value ?? false} name={name} />
+            }
           ></FormControlLabel>
         </FormControl>
       )}

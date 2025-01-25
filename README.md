@@ -5,3 +5,4 @@ Generates dynamic forms based a pre-defined schema.
 ## TODO
 
 - [ ] write descriptive readme file (this)
+- [ ] persist forms

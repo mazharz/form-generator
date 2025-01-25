@@ -6,4 +6,10 @@ export const StyledCard = styled(Card)`
   gap: 1rem;
   padding: 1rem;
   margin-bottom: 2rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;

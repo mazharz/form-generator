@@ -19,9 +19,15 @@ const TextField = ({ name, label, type = "text", required = false }: Props) => {
       name={name}
       control={control}
       rules={{ required }}
-      render={({ field, fieldState: { error } }) => (
+      render={({ field: { value, ...field }, fieldState: { error } }) => (
         <FormControl error={error}>
-          <MuiTextField {...field} name={name} label={label} type={type} />
+          <MuiTextField
+            {...field}
+            value={value ?? ""}
+            name={name}
+            label={label}
+            type={type}
+          />
         </FormControl>
       )}
     />
