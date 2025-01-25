@@ -31,6 +31,12 @@ export default tseslint.config(
           message:
             "Please import TextField from src/components/text-field/text-field.tsx instead",
         },
+        {
+          name: "@mui/material",
+          importNames: ["Checkbox"],
+          message:
+            "Please import Checkbox from src/components/check-box/check-box.tsx instead",
+        },
       ],
     },
   },
