@@ -1,41 +1,102 @@
-import { Button } from "@mui/material";
 import "./App.css";
-import { TextField } from "./components/text-field/text-field";
-import { FormProvider, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
-import { Checkbox } from "./components/check-box/check-box";
+import { FormsGenerator } from "./components/form-generator/forms-generator";
+import { createForm } from "./helpers/form";
 
-const schema = yup.object({
-  a: yup.string().required("a is a required field!"),
-  b: yup.bool().required("b is required!"),
-});
+const forms = [
+  createForm({
+    id: "personal-info",
+    name: "personal info",
+    elements: [
+      {
+        id: "name",
+        type: "text",
+        label: "Name",
+        isRequired: true,
+      },
+      {
+        id: "age",
+        type: "text",
+        label: "Age",
+        isRequired: false,
+        textType: "number",
+      },
+    ],
+  }),
+  createForm({
+    id: "interests",
+    name: "interests",
+    elements: [
+      {
+        id: "has-fav-tv-show",
+        type: "checkbox",
+        label: "Do you have a favorite tv show?",
+        isRequired: false,
+      },
+      {
+        id: "can-you-tell-us-what-show",
+        type: "checkbox",
+        label: "Can you tell us what show?",
+        isRequired: true,
+        conditions: [
+          {
+            targetElementId: "has-fav-tv-show",
+            valueToMatch: true,
+          },
+        ],
+      },
+      {
+        id: "fav-tv-show",
+        type: "text",
+        label: "What is your favorite tv show?",
+        isRequired: true,
+        conditions: [
+          {
+            targetElementId: "has-fav-tv-show",
+            valueToMatch: true,
+          },
+          {
+            targetElementId: "can-you-tell-us-what-show",
+            valueToMatch: true,
+          },
+        ],
+      },
+    ],
+  }),
+
+  createForm({
+    id: "misc",
+    name: "misc",
+    elements: [
+      {
+        id: "type-of-os",
+        label: "What is your OS?",
+        isRequired: true,
+        type: "text",
+        choices: [
+          {
+            id: "windows",
+            name: "Windows",
+          },
+          {
+            id: "mac",
+            name: "Mac",
+          },
+          {
+            id: "linux",
+            name: "Linux",
+          },
+        ],
+      },
+    ],
+  }),
+];
 
 function App() {
-  const methods = useForm({
-    resolver: yupResolver(schema),
-  });
-
-  const submit = methods.handleSubmit((data) => console.log(data));
-
   return (
     <>
-      <FormProvider {...methods}>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "20rem",
-            gap: "1rem",
-          }}
-        >
-          <TextField name="a" label="hi" required />
-          <Checkbox name="b" label="sup" required />
-          <Button variant="contained" onClick={submit}>
-            submit
-          </Button>
-        </div>
-      </FormProvider>
+      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
+        <FormsGenerator forms={forms} />
+      </div>
     </>
   );
 }
