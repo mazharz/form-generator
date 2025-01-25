@@ -1,6 +1,7 @@
+import { Grid2 as Grid } from "@mui/material";
 import "./App.css";
-import { FormsGenerator } from "./components/form-generator/forms-generator";
 import { createForm } from "./helpers/form";
+import { Forms } from "./components/form/forms";
 
 const forms = [
   createForm({
@@ -94,9 +95,14 @@ const forms = [
 function App() {
   return (
     <>
-      <div style={{ maxWidth: "600px", margin: "0 auto" }}>
-        <FormsGenerator forms={forms} />
-      </div>
+      <Grid container spacing={2}>
+        <Grid size={4}>
+          <div>form generator will be here</div>
+        </Grid>
+        <Grid size={8}>
+          <Forms forms={forms} />
+        </Grid>
+      </Grid>
     </>
   );
 }

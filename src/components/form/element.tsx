@@ -1,24 +1,19 @@
 import { useFormContext } from "react-hook-form";
-import { Element } from "../../types/form";
+import { Element as TElement } from "../../types/form";
 import { Checkbox } from "../check-box/check-box";
 import { TextField } from "../text-field/text-field";
+import { allConditionsPass } from "../../helpers/yup";
 
 type Props<T> = {
-  element: Element<T>;
+  element: TElement<T>;
 };
 
-const ElementGenerator = <T,>({ element }: Props<T>) => {
+const Element = <T,>({ element }: Props<T>) => {
   const { watch } = useFormContext();
   const fields = watch();
 
-  if (element.conditions && element.conditions.length > 0) {
-    const allConditionsPass = element.conditions.every((condition) => {
-      const target = condition.targetElementId;
-      const value = fields[target];
-      return value === condition.valueToMatch;
-    });
-
-    if (!allConditionsPass) return <></>;
+  if (!allConditionsPass(element, Object.values(fields))) {
+    return <></>;
   }
 
   if (element.type === "text") {
@@ -45,4 +40,4 @@ const ElementGenerator = <T,>({ element }: Props<T>) => {
   return <></>;
 };
 
-export { ElementGenerator };
+export { Element };

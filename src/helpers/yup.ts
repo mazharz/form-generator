@@ -88,7 +88,10 @@ const getConditionPaths = <T>(
   );
 };
 
-const allConditionsPass = <T>(element: GenericElement<T>, args: unknown[]) => {
+export const allConditionsPass = <T>(
+  element: GenericElement<T>,
+  args: unknown[],
+) => {
   if (!element.conditions || element.conditions.length === 0) return true;
 
   return element.conditions.every((condition, index) => {

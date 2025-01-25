@@ -1,16 +1,16 @@
 import { Button, Typography } from "@mui/material";
-import { Form } from "../../types/form";
-import { ElementGenerator } from "./element-generator";
+import { Form as TForm } from "../../types/form";
+import { Element } from "./element";
 import { FormProvider, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { generateYupSchema } from "../../helpers/yup";
 import { StyledCard } from "./styles";
 
 type Props<T> = {
-  form: Form<T>;
+  form: TForm<T>;
 };
 
-const FormGenerator = <T,>({ form }: Props<T>) => {
+const Form = <T,>({ form }: Props<T>) => {
   const methods = useForm({
     resolver: yupResolver(generateYupSchema(form)),
   });
@@ -28,7 +28,7 @@ const FormGenerator = <T,>({ form }: Props<T>) => {
           {form.name}
         </Typography>
         {form.elements.map((element) => (
-          <ElementGenerator key={element.id} element={element} />
+          <Element key={element.id} element={element} />
         ))}
         <Button variant="contained" onClick={submit}>
           Submit
@@ -38,4 +38,4 @@ const FormGenerator = <T,>({ form }: Props<T>) => {
   );
 };
 
-export { FormGenerator };
+export { Form };
