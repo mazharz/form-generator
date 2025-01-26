@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { Form } from "../types/form";
+import { persist } from "zustand/middleware";
 
 type GlobalForms = {
   forms: Form[];
@@ -95,9 +96,17 @@ const initForms: Form[] = [
   },
 ];
 
-export const useForms = create<GlobalForms>()((set) => ({
-  forms: initForms,
-  removeForm: (id: string) =>
-    set((state) => ({ forms: state.forms.filter((f) => f.id !== id) })),
-  addForm: (form: Form) => set((state) => ({ forms: [...state.forms, form] })),
-}));
+export const useForms = create<GlobalForms>()(
+  persist(
+    (set) => ({
+      forms: initForms,
+      removeForm: (id: string) =>
+        set((state) => ({ forms: state.forms.filter((f) => f.id !== id) })),
+      addForm: (form: Form) =>
+        set((state) => ({ forms: [...state.forms, form] })),
+    }),
+    {
+      name: "forms-storage",
+    },
+  ),
+);
