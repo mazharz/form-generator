@@ -17,3 +17,7 @@ Run locally:
 1. Install the packages: `npm i`
 1. Run the project: `npm run dev`
 1. Visit: `http://localhost:5173/form-generator`
+
+## Running the tests
+
+`npm run test`

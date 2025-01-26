@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -5,4 +6,8 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/form-generator",
+  test: {
+    globals: true, // Enables test globals like `expect` and `describe`
+    environment: "jsdom", // Simulates a browser environment for React components
+  },
 });
