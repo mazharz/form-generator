@@ -63,7 +63,4 @@ const ElementGenerator = ({ id }: Props) => {
   );
 };
 
-// TODO
-// conditions?: Condition<T>[];
-// choices?: Choice[];
 export { ElementGenerator };
