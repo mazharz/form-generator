@@ -1,15 +1,14 @@
 import { create } from "zustand";
 import { Form } from "../types/form";
-import { createForm } from "../helpers/form";
 
-type GlobalForms<T> = {
-  forms: Form<T>[];
+type GlobalForms = {
+  forms: Form[];
   removeForm: (id: string) => void;
-  addForm: (form: Form<unknown>) => void;
+  addForm: (form: Form) => void;
 };
 
-const initForms: Form<unknown>[] = [
-  createForm({
+const initForms: Form[] = [
+  {
     id: "personal-info",
     name: "personal info",
     elements: [
@@ -27,8 +26,8 @@ const initForms: Form<unknown>[] = [
         textType: "number",
       },
     ],
-  }),
-  createForm({
+  },
+  {
     id: "interests",
     name: "interests",
     elements: [
@@ -46,7 +45,7 @@ const initForms: Form<unknown>[] = [
         conditions: [
           {
             targetElementId: "has-fav-tv-show",
-            valueToMatch: true,
+            valueToMatch: "true",
           },
         ],
       },
@@ -58,17 +57,17 @@ const initForms: Form<unknown>[] = [
         conditions: [
           {
             targetElementId: "has-fav-tv-show",
-            valueToMatch: true,
+            valueToMatch: "true",
           },
           {
             targetElementId: "can-you-tell-us-what-show",
-            valueToMatch: true,
+            valueToMatch: "true",
           },
         ],
       },
     ],
-  }),
-  createForm({
+  },
+  {
     id: "misc",
     name: "misc",
     elements: [
@@ -93,13 +92,12 @@ const initForms: Form<unknown>[] = [
         ],
       },
     ],
-  }),
+  },
 ];
 
-export const useForms = create<GlobalForms<unknown>>()((set) => ({
+export const useForms = create<GlobalForms>()((set) => ({
   forms: initForms,
   removeForm: (id: string) =>
     set((state) => ({ forms: state.forms.filter((f) => f.id !== id) })),
-  addForm: (form: Form<unknown>) =>
-    set((state) => ({ forms: [...state.forms, form] })),
+  addForm: (form: Form) => set((state) => ({ forms: [...state.forms, form] })),
 }));

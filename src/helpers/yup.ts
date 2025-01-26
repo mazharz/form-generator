@@ -12,7 +12,7 @@ type Shape = {
   [key: string]: any;
 };
 
-export const generateYupSchema = <T>(form: Form<T>) => {
+export const generateYupSchema = (form: Form) => {
   const shape: Shape = {};
 
   form.elements.forEach((element) => {
@@ -28,9 +28,9 @@ export const generateYupSchema = <T>(form: Form<T>) => {
   return yup.object(shape);
 };
 
-const generateTextValidation = <T>(
-  element: GenericElement<T> & TextElement,
-  allElements: Element<T>[],
+const generateTextValidation = (
+  element: GenericElement & TextElement,
+  allElements: Element[],
 ) => {
   let textValidation = yup.string().trim();
 
@@ -56,9 +56,9 @@ const generateTextValidation = <T>(
   return textValidation;
 };
 
-const generateCheckboxValidation = <T>(
-  element: GenericElement<T> & CheckboxElement,
-  allElements: Element<T>[],
+const generateCheckboxValidation = (
+  element: GenericElement & CheckboxElement,
+  allElements: Element[],
 ) => {
   let checkboxValidation = yup.boolean();
 
@@ -76,26 +76,21 @@ const generateCheckboxValidation = <T>(
   return checkboxValidation;
 };
 
-const getConditionPaths = <T>(
-  element: GenericElement<T>,
-  allElements: Element<T>[],
-) => {
+const getConditionPaths = (element: GenericElement, allElements: Element[]) => {
   return (
     element.conditions?.map(
       (condition) =>
-        allElements.find((el) => el.id === condition.targetElementId)?.id ?? "",
+        allElements.find((el) => el?.id === condition.targetElementId)?.id ??
+        "",
     ) ?? []
   );
 };
 
-export const allConditionsPass = <T>(
-  element: GenericElement<T>,
-  args: unknown[],
-) => {
+export const allConditionsPass = (element: GenericElement, args: unknown[]) => {
   if (!element.conditions || element.conditions.length === 0) return true;
 
   return element.conditions.every((condition, index) => {
     const value = args[index];
-    return value === condition.valueToMatch;
+    return String(value) === condition.valueToMatch;
   });
 };

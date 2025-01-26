@@ -8,11 +8,11 @@ import { StyledCard } from "./styles";
 import { useForms } from "../../state/forms";
 import { toast } from "react-toastify";
 
-type Props<T> = {
-  form: TForm<T>;
+type Props = {
+  form: TForm;
 };
 
-const Form = <T,>({ form }: Props<T>) => {
+const Form = ({ form }: Props) => {
   const removeForm = useForms((state) => state.removeForm);
   const methods = useForm({
     resolver: yupResolver(generateYupSchema(form)),

@@ -4,11 +4,11 @@ import { Checkbox } from "../check-box/check-box";
 import { TextField } from "../text-field/text-field";
 import { allConditionsPass } from "../../helpers/yup";
 
-type Props<T> = {
-  element: TElement<T>;
+type Props = {
+  element: TElement;
 };
 
-const Element = <T,>({ element }: Props<T>) => {
+const Element = ({ element }: Props) => {
   const { watch } = useFormContext();
   const fields = watch();
 

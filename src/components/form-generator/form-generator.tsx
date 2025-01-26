@@ -9,25 +9,29 @@ import { Visible } from "../visible/visible";
 import { useForms } from "../../state/forms";
 import { schema } from "./schema";
 
-let counter = 0;
+let elementCounter = 0;
 
 const FormGenerator = () => {
-  const [elementIds, setElementIds] = useState<number[]>([]);
+  const [tempElementIds, setTempElementIds] = useState<number[]>([]);
   const addForm = useForms((state) => state.addForm);
   const methods = useForm({
     resolver: yupResolver(schema),
   });
 
-  const submit = methods.handleSubmit((data) => {
-    setElementIds([]);
+  const elementsError = methods.formState.errors.elements?.message;
+
+  const cleanForm = () => {
+    setTempElementIds([]);
     methods.reset();
+  };
+
+  const submit = methods.handleSubmit((data) => {
+    cleanForm();
     addForm(data);
   });
 
-  const elementsError = methods.formState.errors.elements?.message;
-
   const addElement = (id: number) => {
-    setElementIds((prev) => [...prev, id]);
+    setTempElementIds((prev) => [...prev, id]);
   };
 
   return (
@@ -52,20 +56,30 @@ const FormGenerator = () => {
           Form Elements
         </Typography>
 
-        {elementIds.map((id) => (
+        {tempElementIds.map((id) => (
           <ElementGenerator id={id} key={id} />
         ))}
         <Visible when={!!elementsError}>
           <FormHelperText error>{elementsError}</FormHelperText>
         </Visible>
 
-        <Button variant="outlined" onClick={() => addElement(counter++)}>
+        <Button variant="outlined" onClick={() => addElement(elementCounter++)}>
           Add another element
         </Button>
 
-        <Button variant="contained" onClick={submit}>
-          Create
-        </Button>
+        <div className="actions">
+          <Button variant="contained" onClick={submit} fullWidth>
+            Create
+          </Button>
+          <Button
+            variant="outlined"
+            color="warning"
+            onClick={cleanForm}
+            fullWidth
+          >
+            Clean
+          </Button>
+        </div>
       </StyledCard>
     </FormProvider>
   );

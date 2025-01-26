@@ -6,6 +6,11 @@ export const StyledCard = styled(Card)`
   gap: 1rem;
   padding: 1rem;
   margin-bottom: 2rem;
+
+  .actions {
+    display: flex;
+    gap: 1rem;
+  }
 `;
 
 export const StyledElementWrapper = styled("div")`
@@ -16,4 +21,9 @@ export const StyledElementWrapper = styled("div")`
   background-color: ${({ theme }) => theme.palette.grey[100]};
   border-radius: 0.5rem;
   margin-bottom: 1rem;
+`;
+
+export const StyledChoiceWrapper = styled("div")`
+  display: flex;
+  gap: 1rem;
 `;

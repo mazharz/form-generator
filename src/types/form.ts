@@ -1,18 +1,18 @@
 import { HTMLInputTypeAttribute } from "react";
 
-export type Form<T> = {
+export type Form = {
   id: string;
   name: string;
-  elements: Element<T>[];
+  elements: Element[];
 };
 
-export type Element<T> = GenericElement<T> & (TextElement | CheckboxElement);
+export type Element = GenericElement & (TextElement | CheckboxElement);
 
-export type GenericElement<T> = {
+export type GenericElement = {
   id: string;
   label: string;
   isRequired: boolean;
-  conditions?: Condition<T>[];
+  conditions?: Condition[];
 };
 
 export type TextElement = {
@@ -30,7 +30,7 @@ export type Choice = {
   name: string;
 };
 
-export type Condition<T> = {
+export type Condition = {
   targetElementId: string;
-  valueToMatch: T;
+  valueToMatch: string;
 };

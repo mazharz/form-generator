@@ -1,11 +1,11 @@
 import { Form as TForm } from "../../types/form";
 import { Form } from "./form";
 
-type Props<T> = {
-  forms: TForm<T>[];
+type Props = {
+  forms: TForm[];
 };
 
-const Forms = <T,>({ forms }: Props<T>) => {
+const Forms = ({ forms }: Props) => {
   return forms.map((form) => <Form key={form.id} form={form} />);
 };
 
